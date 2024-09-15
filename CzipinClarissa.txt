@@ -26,4 +26,4 @@ git rebase main
 
 Wie kann festgelegt werden, dass eine Datei nicht versioniert und synchronisiert wird?
 
-Heißt das sie nicht in Git getrackt werden. Um dies zu erreichen ist es wichtig, dass es eine .gitignore-Datei gibt. Wenn sie nicht da ist kann man sie theoretisch mittels "touch .gitignore". In der .gitignore-Datei einfach den Dateinamen bzw. Pfad zur Datei innerhalb des repository hinzufügen. Wenn sie schon eingecheckt worden ist kann man sie mittels "git rm --cached dateiname" wieder gelöscht werden.
+Heißt das sie nicht in Git getrackt werden. Um dies zu erreichen ist es wichtig, dass es eine .gitignore-Datei gibt. Wenn sie nicht da ist kann man sie theoretisch mittels "touch .gitignore".In der .gitignore-Datei einfach den Dateinamen bzw. Pfad zur Datei innerhalb des repository hinzufügen. Wenn sie schon eingecheckt worden ist kann man sie mittels "git rm --cached dateiname" wieder gelöscht werden.
