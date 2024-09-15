@@ -37,31 +37,32 @@ public class MPanel extends JPanel{
 
     }
     public void setZahlen(int[] z) {
-        if(z[0] == 5 || z[0] == 10){
-            this.punkte[1].setText(""+z[2]);
-            this.punkte[1].setOpaque(true);
-            this.punkte[1].setBackground(Color.GREEN);
-        } else{
-            this.punkte[1].setText(""+z[2]);
-            this.punkte[1].setOpaque(true);
-            this.punkte[1].setBackground(Color.RED);
-        }
-
-        this.computer.setText(""+z[0]);
-
-        if(z[1] >= 100){
-            this.punkte[0].setText("GEWONNEN!");
-            this.punkte[0].setOpaque(true);
-            this.punkte[0].setBackground(Color.GREEN);
-        } else if(z[1] <= 0){
-            this.punkte[0].setText("VERLOREN!");
-            this.punkte[0].setOpaque(true);
-            this.punkte[0].setBackground(Color.RED);
+        JPanel ergebnisPanel = (JPanel) this.punkte[1].getParent();
+        if (z[2] == 5 || z[2] == 10) {
+            this.punkte[1].setText("" + z[2]);
+            ergebnisPanel.setBackground(Color.GREEN);
         } else {
-            this.punkte[0].setText(""+z[1]);
-            this.punkte[0].setOpaque(true);
+            this.punkte[1].setText("" + z[2]);
+            ergebnisPanel.setBackground(Color.RED);
         }
+        this.computer.setText("" + z[0]);
+
+        JPanel punktePanel = (JPanel) this.punkte[0].getParent();
+        if (z[1] >= 100) {
+            this.punkte[0].setText("GEWONNEN!");
+            punktePanel.setBackground(Color.GREEN);
+        } else if (z[1] <= 0) {
+            this.punkte[0].setText("VERLOREN!");
+            punktePanel.setBackground(Color.RED);
+        } else {
+            this.punkte[0].setText("" + z[1]);
+            punktePanel.setBackground(Color.WHITE);
+        }
+
+        this.revalidate();
+        this.repaint();
     }
+
 
     public void setFixtexte(){
         this.fixtexte[0] = new JLabel("Punkte gesamt:");
@@ -109,6 +110,9 @@ public class MPanel extends JPanel{
         this.zahl.setText("");
         this.computer.setText("");
         this.punkte[1].setText("");
+        if(this.punkte[1].getParent() != null){
+            this.punkte[1].getParent().setBackground(Color.WHITE);
+        }
     }
 
     public int getZahl() {

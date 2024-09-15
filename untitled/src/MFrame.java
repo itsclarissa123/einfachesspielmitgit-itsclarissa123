@@ -9,7 +9,7 @@ public class MFrame extends JFrame {
      * Konstruktor für das Frame
      */
     public MFrame(MPanel p){
-        super("Gewinnspielo");
+        super("Gewinnspiel");
         this.add(p);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack(); this.setLocationRelativeTo(null);

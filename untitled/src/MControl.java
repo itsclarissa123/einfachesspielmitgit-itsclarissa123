@@ -6,68 +6,43 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-/**
- * MVC Control
- * @author Clarissa Czipin
- * @version 2024-09-15
- */
-public class MControl implements ActionListener, KeyListener , DocumentListener {
+public class MControl implements ActionListener, DocumentListener {
     private MPanel p;
     private MFrame f;
     private GewinnModel m;
 
-    public MControl(){
+    public MControl() {
         this.p = new MPanel(this);
         this.f = new MFrame(p);
         this.m = new GewinnModel();
-
+        this.p.zahl.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         this.action();
-
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode()==KeyEvent.VK_ENTER){
-            this.action();
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode()==KeyEvent.VK_ENTER){
-            action();
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        //nix
-    }
 
     public void action() {
         int spielerZahl = p.getZahl();
         m.berechneRunde(spielerZahl);
 
-        // Zahlen für die GUI aktualisieren
         int[] z = new int[3];
         z[0] = m.getComputerZahl();
         z[1] = m.getGesamtPunkte();
         z[2] = m.getRundenErgebnis();
 
-        // Setze die neuen Werte und aktualisiere die GUI
         p.setZahlen(z);
-        p.revalidate();  // Erzwinge Neuanordnung der Komponenten
-        p.repaint();     // Erzwinge Neuzeichnen der GUI
+
+        if (z[1] >= 100 || z[1] <= 0) {
+            p.nochmal.setEnabled(false);
+        }
+
+        p.revalidate();
+        p.repaint();
     }
 
-    /**
-     * Main-Methode
-     * @param args Commandline Parameter
-     */
     public static void main(String[] args) {
         MControl c = new MControl();
     }
@@ -80,13 +55,13 @@ public class MControl implements ActionListener, KeyListener , DocumentListener 
             String inputText = d.getText(0, d.getLength());
             z = Integer.parseInt(inputText);
         } catch (NumberFormatException ex) {
-
+            // keine Aktion bei ungültiger Zahl
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         m.setSpielerZahl(z);
-        if (m.zahlIsValid(z)) {
+        if (m.zahlIsValid(z) && (m.getGesamtPunkte() < 100 && m.getGesamtPunkte() > 0)) {
             p.nochmal.setEnabled(true);
         } else {
             p.nochmal.setEnabled(false);
