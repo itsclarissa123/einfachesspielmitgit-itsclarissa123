@@ -38,7 +38,7 @@ public class MPanel extends JPanel{
     }
     public void setZahlen(int[] z) {
         JPanel ergebnisPanel = (JPanel) this.punkte[1].getParent();
-        if (z[2] == 5 || z[2] == 10) {
+        if (z[2] == 5 || z[2] == 20) {
             this.punkte[1].setText("" + z[2]);
             ergebnisPanel.setBackground(Color.GREEN);
         } else {

@@ -37,6 +37,7 @@ public class MControl implements ActionListener, DocumentListener {
 
         if (z[1] >= 100 || z[1] <= 0) {
             p.nochmal.setEnabled(false);
+            this.p.zahl.removeActionListener(this);
         }
 
         p.revalidate();
