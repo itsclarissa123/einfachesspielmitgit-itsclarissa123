@@ -51,22 +51,18 @@ public class MControl implements ActionListener, DocumentListener {
     @Override
     public void insertUpdate(DocumentEvent e) {
         Document d = e.getDocument();
-        int z = 11;
         try {
             String inputText = d.getText(0, d.getLength());
-            z = Integer.parseInt(inputText);
+            int z = Integer.parseInt(inputText);
+            if (m.zahlIsValid(z) && (m.getGesamtPunkte() < 100 && m.getGesamtPunkte() > 0)) {
+                p.nochmal.setEnabled(true);
+            } else {
+                p.nochmal.setEnabled(false);
+            }
         } catch (NumberFormatException ex) {
-            // keine Aktion bei ungültiger Zahl
+            p.nochmal.setEnabled(false);
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
-
-        m.setSpielerZahl(z);
-        if (m.zahlIsValid(z) && (m.getGesamtPunkte() < 100 && m.getGesamtPunkte() > 0)) {
-            p.nochmal.setEnabled(true);
-        } else {
-            p.nochmal.setEnabled(false);
-            p.clear();
         }
     }
 
