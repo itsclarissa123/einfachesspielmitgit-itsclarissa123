@@ -17,6 +17,9 @@ public class GewinnModel {
     public int getGesamtPunkte(){
         return this.gesamtPunkte;
     }
+    public void setSpielerZahl(int z){
+        this.spielerZahl = z;
+    }
     public int getComputerZahl(){
         return this.computerZahl;
     }

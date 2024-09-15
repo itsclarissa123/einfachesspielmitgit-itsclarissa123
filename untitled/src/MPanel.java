@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 /**
@@ -12,15 +14,18 @@ public class MPanel extends JPanel{
     public JLabel[] fixtexte = new JLabel[4];
     public JLabel[] punkte = new JLabel[2];
     public JLabel computer = new JLabel();
-    public int i = 0;
 
-    public MPanel(MControl c){ reset(c);}
+    public MPanel(MControl c){
+        this.punkte[0] = new JLabel("30");
+        this.punkte[1] = new JLabel("");
+        clear();
+        reset(c);
+    }
     public void reset(MControl c){
         this.setLayout(new BorderLayout());
-        clear();
         setFixtexte();
         setNochmal(c);
-        JPanel a = setPoints(this.punkte);
+        JPanel a = setPoints();
         JPanel b = setZahlen();
         JPanel d = new JPanel();
         d.setLayout(new GridLayout(2,1));
@@ -31,15 +36,33 @@ public class MPanel extends JPanel{
 
 
     }
-    public void setZahlen(int[] z){
-        if(i == 0){
+    public void setZahlen(int[] z) {
+        if(z[0] == 5 || z[0] == 10){
+            this.punkte[1].setText(""+z[2]);
+            this.punkte[1].setOpaque(true);
+            this.punkte[1].setBackground(Color.GREEN);
+        } else{
+            this.punkte[1].setText(""+z[2]);
+            this.punkte[1].setOpaque(true);
+            this.punkte[1].setBackground(Color.RED);
+        }
 
-        }else {
-            this.punkte[0] = new JLabel("" + z[0]);
-            this.punkte[1] = new JLabel("" + z[1]);
-            this.computer = new JLabel("" + z[2]);
+        this.computer.setText(""+z[0]);
+
+        if(z[1] >= 100){
+            this.punkte[0].setText("GEWONNEN!");
+            this.punkte[0].setOpaque(true);
+            this.punkte[0].setBackground(Color.GREEN);
+        } else if(z[1] <= 0){
+            this.punkte[0].setText("VERLOREN!");
+            this.punkte[0].setOpaque(true);
+            this.punkte[0].setBackground(Color.RED);
+        } else {
+            this.punkte[0].setText(""+z[1]);
+            this.punkte[0].setOpaque(true);
         }
     }
+
     public void setFixtexte(){
         this.fixtexte[0] = new JLabel("Punkte gesamt:");
         this.fixtexte[1] = new JLabel("Aktuelles Ergebnis:");
@@ -49,32 +72,43 @@ public class MPanel extends JPanel{
     public void setNochmal(MControl c){
         this.nochmal = new JButton("Noch einmal!");
         this.nochmal.addActionListener(c);
+        this.zahl.getDocument().addDocumentListener(c);
         this.nochmal.setEnabled(false);
     }
-    public JPanel setPoints(JLabel[] punkte){
+    public JPanel setPoints() {
         JPanel g = new JPanel();
-        g.setLayout(new GridLayout(3,2));
-        g.add(this.fixtexte[0]).setBackground(Color.GRAY);
-        g.add(this.fixtexte[1]).setBackground(Color.GRAY);
-        g.add(punkte[0]);
-        g.add(punkte[1]);
-        g.add(this.fixtexte[2]).setBackground(Color.GRAY);
-        g.add(this.fixtexte[3]).setBackground(Color.GRAY);
+        JPanel g1 = new JPanel();
+        JPanel g2 = new JPanel();
+        g.setLayout(new GridLayout(3, 2));
+
+        g.add(this.fixtexte[0]);
+        g.add(this.fixtexte[1]);
+        g1.add(this.punkte[0]);
+        g.add(g1);
+        g2.add(this.punkte[1]);
+        g.add(g2);
+        g.add(this.fixtexte[2]);
+        g.add(this.fixtexte[3]);
+
+        g2.setBackground(Color.WHITE);
+        g1.setBackground(Color.WHITE);
         return g;
     }
+
 
     public JPanel setZahlen(){
         JPanel g = new JPanel();
         g.setLayout(new GridLayout(1,2));
         g.add(zahl);
         g.add(computer);
+        g.setBackground(Color.WHITE);
         return g;
     }
 
     public void clear(){
-        this.computer = new JLabel("");
-        this.punkte[1] = new JLabel("");
-        this.zahl = new JTextField("");
+        this.zahl.setText("");
+        this.computer.setText("");
+        this.punkte[1].setText("");
     }
 
     public int getZahl() {
