@@ -3,8 +3,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class MControl implements ActionListener, DocumentListener {
     private MPanel p;
@@ -20,9 +18,10 @@ public class MControl implements ActionListener, DocumentListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.action();
+        if (p.nochmal.isEnabled()) {
+            this.action();
+        }
     }
-
 
     public void action() {
         int spielerZahl = p.getZahl();
@@ -42,6 +41,12 @@ public class MControl implements ActionListener, DocumentListener {
 
         p.revalidate();
         p.repaint();
+
+        // Debug-Ausgabe
+        System.out.println("SpielerZahl: " + spielerZahl);
+        System.out.println("ComputerZahl: " + z[0]);
+        System.out.println("GesamtPunkte: " + z[1]);
+        System.out.println("RundenErgebnis: " + z[2]);
     }
 
     public static void main(String[] args) {
@@ -54,6 +59,11 @@ public class MControl implements ActionListener, DocumentListener {
         try {
             String inputText = d.getText(0, d.getLength());
             int z = Integer.parseInt(inputText);
+
+            // Debug-Ausgabe
+            System.out.println("Eingabe: " + inputText);
+            System.out.println("Parsed Zahl: " + z);
+
             if (m.zahlIsValid(z) && (m.getGesamtPunkte() < 100 && m.getGesamtPunkte() > 0)) {
                 p.nochmal.setEnabled(true);
             } else {
