@@ -6,7 +6,8 @@ import javax.swing.*;
  */
 public class MFrame extends JFrame {
     /**
-     * Konstruktor für das Frame
+     * KOnstruktor für das Frame
+     * @param p das Panel
      */
     public MFrame(MPanel p){
         super("Gewinnspiel");

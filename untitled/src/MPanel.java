@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 /**
@@ -9,18 +7,34 @@ import java.awt.*;
  * @version 20224-09-15
  */
 public class MPanel extends JPanel{
+    /* Der Nocheinmal-Button zum Wiederholen des Spieles */
     public JButton nochmal = new JButton();
+    /* Das Textfeld, indem der User seine Zahl eingibt */
     public JTextField zahl = new JTextField();
+    /* Die fixen Texte die den Wert beschreiben, der darunter steht */
     public JLabel[] fixtexte = new JLabel[4];
+    /* Die Aktuellen und gesamten Punkte */
     public JLabel[] punkte = new JLabel[2];
+    /* Die generierte Zahl vom Computer */
     public JLabel computer = new JLabel();
 
+    /**
+     * Konstruktor für MPanel-Klasse
+     * @param c Controlklasse für Events
+     */
     public MPanel(MControl c){
         this.punkte[0] = new JLabel("30");
         this.punkte[1] = new JLabel("");
         clear();
         reset(c);
     }
+
+    /**
+     * setzt die Zahlen, und das generelle
+     * Layout neu zusammen und hier wird es
+     * auch erst erstellt.
+     * @param c die Control Klasse für die Events
+     */
     public void reset(MControl c){
         this.setLayout(new BorderLayout());
         setFixtexte();
@@ -36,6 +50,14 @@ public class MPanel extends JPanel{
 
 
     }
+
+    /**
+     * Setzt die Farben der Felder, je nach übergebener Zahlen.
+     * Setzt die Zahlen in die richtige Box.
+     * Setzt einen Text, wenn die Gesamtpunkte > 100 oder < 0 sind.
+     *
+     * @param z die Zahlenwerte, die aus der Berechnung heraus kamen
+     */
     public void setZahlen(int[] z) {
         JPanel ergebnisPanel = (JPanel) this.punkte[1].getParent();
         if (z[2] == 5 || z[2] == 20) {
@@ -63,19 +85,41 @@ public class MPanel extends JPanel{
         this.repaint();
     }
 
-
+    /**
+     * Die Fixtexte, werden festgelegt.
+     * Fixtexte sind jene Texte, die sich
+     * im Laufe des Spieles nicht verändern.
+     */
     public void setFixtexte(){
         this.fixtexte[0] = new JLabel("Punkte gesamt:");
         this.fixtexte[1] = new JLabel("Aktuelles Ergebnis:");
         this.fixtexte[2] = new JLabel("Zahl für die nächste Runde:");
         this.fixtexte[3] = new JLabel("Computerzahl:");
     }
+
+    /**
+     * Hier werden alle wichtigen Einstellungen
+     * Für den noch einmal BUtton getroffen.
+     * ZB. setzten des Buttons, Listeners hinzufügen,
+     * der button ist vorerst nicht drückbar.
+     * @param c die Klasse der Listeners
+     */
     public void setNochmal(MControl c){
         this.nochmal = new JButton("Noch einmal!");
         this.nochmal.addActionListener(c);
         this.zahl.getDocument().addDocumentListener(c);
         this.nochmal.setEnabled(false);
     }
+
+    /**
+     * Hier werden alle Punkte bis auf die
+     * Spielerzahl und die Computerzahl,
+     * und die Fixtexte
+     * in die Panels geschrieben und
+     * die Standardfarbe gesetzt.
+     * @return ein vollständiges Panel der ersten drei Zeilen
+     *          inkl akt und gesamt Punkten und den dixen Texten.
+     */
     public JPanel setPoints() {
         JPanel g = new JPanel();
         JPanel g1 = new JPanel();
@@ -96,7 +140,12 @@ public class MPanel extends JPanel{
         return g;
     }
 
-
+    /**
+     * Hier werden die Computer Zahl und die
+     * Spielerzahl in ein Panel geschrieben und
+     * zusammengefasst.
+     * @return ein Panel mit Computer- und Spielerzahl
+     */
     public JPanel setZahlen(){
         JPanel g = new JPanel();
         g.setLayout(new GridLayout(1,2));
@@ -106,6 +155,12 @@ public class MPanel extends JPanel{
         return g;
     }
 
+    /**
+     * setzt die Werte der aktuellen Punkte
+     * Computerzahl, und die Userzahl werden
+     * wieder leer angezeigt und die Farbe der
+     * aktuellen Punkte wird wieder auf weiß gesetzt
+     */
     public void clear(){
         this.zahl.setText("");
         this.computer.setText("");
@@ -115,6 +170,11 @@ public class MPanel extends JPanel{
         }
     }
 
+    /**
+     * Die Zahl aus dem Textfeld wird aus
+     * dem Textfeld und in einen Int geparst.
+     * @return die eingegebene Userzahl
+     */
     public int getZahl() {
         int i = 11;
         try {
