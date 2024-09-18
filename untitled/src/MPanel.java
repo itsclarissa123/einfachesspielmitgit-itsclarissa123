@@ -108,6 +108,9 @@ public class MPanel extends JPanel{
         this.nochmal = new JButton("Noch einmal!");
         this.nochmal.addActionListener(c);
         this.zahl.getDocument().addDocumentListener(c);
+        this.zahl.setHorizontalAlignment(JTextField.CENTER);
+        Font font = new Font("Arial", Font.PLAIN, 24);
+        this.zahl.setFont(font);
         this.nochmal.setEnabled(false);
     }
 
@@ -134,6 +137,7 @@ public class MPanel extends JPanel{
         g.add(g2);
         g.add(this.fixtexte[2]);
         g.add(this.fixtexte[3]);
+        this.fixtexte[3].setHorizontalAlignment(JTextField.CENTER);
 
         g2.setBackground(Color.WHITE);
         g1.setBackground(Color.WHITE);
@@ -164,9 +168,13 @@ public class MPanel extends JPanel{
     public void clear(){
         this.zahl.setText("");
         this.computer.setText("");
+        this.computer.setHorizontalAlignment(JTextField.CENTER);
+        Font font = new Font("Arial", Font.PLAIN, 24);
+        this.computer.setFont(font);
         this.punkte[1].setText("");
         if(this.punkte[1].getParent() != null){
             this.punkte[1].getParent().setBackground(Color.WHITE);
+            this.punkte[1].setHorizontalAlignment(JTextField.CENTER);
         }
     }
 
